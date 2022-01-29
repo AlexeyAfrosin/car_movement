@@ -1,7 +1,8 @@
-package com.afrosin.car_movement
+package com.afrosin.car_movement.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.afrosin.car_movement.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
