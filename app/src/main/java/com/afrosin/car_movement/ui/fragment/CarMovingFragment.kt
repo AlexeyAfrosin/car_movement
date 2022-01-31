@@ -1,52 +1,41 @@
 package com.afrosin.car_movement.ui.fragment
 
-import android.content.Context
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import com.afrosin.car_movement.R
 import com.afrosin.car_movement.databinding.FragmentCarMovingBinding
 import com.afrosin.car_movement.mvp.presenter.CarMovingPresenter
-import com.afrosin.car_movement.mvp.resource.ResourceProvider
 import com.afrosin.car_movement.mvp.view.CarMovingView
 import com.afrosin.car_movement.ui.App
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
-import javax.inject.Inject
+
 
 class CarMovingFragment : MvpAppCompatFragment(), CarMovingView {
-//    companion object {
-//
-//        fun newInstance() = CarMovingFragment()
-//        const val DEFAULT_ANIMATION_DURATION = 2500L
-//    }
+
     companion object {
         fun newInstance() = CarMovingFragment()
+        const val DEFAULT_ANIMATION_DURATION = 2500L
     }
-
-    protected var ivTaxi: View? = null
-    protected var mFrameLayout: View? = null
-    protected var mScreenHeight = 0f
 
     @InjectPresenter
     lateinit var presenter: CarMovingPresenter
-//
-//    @ProvidePresenter
-//    fun providePresenter() = CarMovingPresenter().apply {
-//        App.instance.appComponent.inject(this)
-//    }
+
+    @ProvidePresenter
+    fun providePresenter() = CarMovingPresenter().apply {
+        App.instance.appComponent.inject(this)
+    }
 
     private var _binding: FragmentCarMovingBinding? = null
 
     private val binding: FragmentCarMovingBinding
         get() = checkNotNull(_binding) { getString(R.string.binding_error) }
 
-    @Inject
-    lateinit var resourceProvider: ResourceProvider
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,40 +44,35 @@ class CarMovingFragment : MvpAppCompatFragment(), CarMovingView {
         _binding = FragmentCarMovingBinding.inflate(inflater, container, false)
         return _binding?.root
     }
-    //    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//
-//        _binding = FragmentCarMovingBinding.inflate(inflater, container, false)
-//        ivTaxi = binding.ivTaxi
-//
-//        mFrameLayout = binding.container
-//        mFrameLayout!!.setOnClickListener { onStartAnimation() }
-//
-//
-//        return binding.root
-//    }
-
-//    override fun onResume() {
-//        super.onResume()
-//        val displayMetrics = DisplayMetrics()
-//
-//
-//        (resourceProvider.getAppContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager)
-//            .defaultDisplay.getMetrics(displayMetrics)
-//
-//
-//        mScreenHeight = displayMetrics.heightPixels.toFloat()
-//    }
-
-    private fun onStartAnimation(){
-
-    }
 
     override fun init() {
-        ivTaxi = binding.ivTaxi
+        initListeners()
+    }
+
+    private fun initListeners() {
+        binding.ivTaxi.setOnClickListener { onStartAnimation() }
+    }
+
+    private fun onStartAnimation() {
+        val mDiagonalAnimation =
+            AnimationUtils.loadAnimation(binding.flAnimation.context, R.anim.slide_diagonal)
+        mDiagonalAnimation.duration = DEFAULT_ANIMATION_DURATION
+
+        mDiagonalAnimation.setAnimationListener(object : Animation.AnimationListener {
+
+            override fun onAnimationStart(animation: Animation?) {
+
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+
+            }
+
+            override fun onAnimationRepeat(animation: Animation?) {
+                binding.ivTaxi.startAnimation(mDiagonalAnimation)
+            }
+        })
+        binding.ivTaxi.startAnimation(mDiagonalAnimation)
     }
 
     override fun onDestroyView() {
