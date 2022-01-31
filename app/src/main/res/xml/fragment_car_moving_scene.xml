@@ -14,7 +14,7 @@
                 app:framePosition="30"
                 app:motionTarget="@+id/iv_taxi"
                 app:percentX="0.85"
-                app:type="deltaRelative" />
+                app:keyPositionType="deltaRelative" />
 
             <KeyCycle
                 android:rotation="50"
@@ -27,13 +27,13 @@
                 app:framePosition="60"
                 app:motionTarget="@+id/iv_taxi"
                 app:percentX="1"
-                app:type="deltaRelative" />
+                app:keyPositionType="deltaRelative" />
 
             <KeyPosition
                 app:framePosition="80"
                 app:motionTarget="@+id/iv_taxi"
                 app:percentX="0.5"
-                app:type="deltaRelative" />
+                app:keyPositionType="deltaRelative" />
 
         </KeyFrameSet>
 
