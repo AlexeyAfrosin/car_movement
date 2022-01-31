@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import com.afrosin.car_movement.R
 import com.afrosin.car_movement.databinding.FragmentCarMovingBinding
 import com.afrosin.car_movement.mvp.presenter.CarMovingPresenter
@@ -20,7 +18,6 @@ class CarMovingFragment : MvpAppCompatFragment(), CarMovingView {
 
     companion object {
         fun newInstance() = CarMovingFragment()
-        const val DEFAULT_ANIMATION_DURATION = 2500L
     }
 
     @InjectPresenter
@@ -50,29 +47,7 @@ class CarMovingFragment : MvpAppCompatFragment(), CarMovingView {
     }
 
     private fun initListeners() {
-        binding.ivTaxi.setOnClickListener { onStartAnimation() }
-    }
-
-    private fun onStartAnimation() {
-        val mDiagonalAnimation =
-            AnimationUtils.loadAnimation(binding.flAnimation.context, R.anim.slide_diagonal)
-        mDiagonalAnimation.duration = DEFAULT_ANIMATION_DURATION
-
-        mDiagonalAnimation.setAnimationListener(object : Animation.AnimationListener {
-
-            override fun onAnimationStart(animation: Animation?) {
-
-            }
-
-            override fun onAnimationEnd(animation: Animation?) {
-
-            }
-
-            override fun onAnimationRepeat(animation: Animation?) {
-                binding.ivTaxi.startAnimation(mDiagonalAnimation)
-            }
-        })
-        binding.ivTaxi.startAnimation(mDiagonalAnimation)
+        binding.ivTaxi.setOnClickListener { binding.flAnimation.transitionToEnd() }
     }
 
     override fun onDestroyView() {
