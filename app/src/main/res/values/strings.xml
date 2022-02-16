@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">car_movement</string>
+    <string name="iv_taxi_content_description">taxi car</string>
+    <string name="binding_error">Ошибка инициализации биндинга</string>
 </resources>
